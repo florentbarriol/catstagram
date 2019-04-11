@@ -1,28 +1,61 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import styled, { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
+import Home from './modules/home/home.component';
+import Profile from './modules/profile/profile.component';
+import About from './modules/about/about.component';
+import { Header, HEADER_HEIGHT } from './components/header.component';
+import { Footer } from './components/footer.component';
+
+const GlobalStyle = createGlobalStyle`
+  ${reset};
+  * {
+    box-sizing: border-box;
   }
-}
+  body, html {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+  }
+`;
 
-export default App;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding-top: ${HEADER_HEIGHT}px;
+  & > footer {
+    margin-top: auto;
+  }
+`;
+
+const MainWrapper = styled.main`
+  background-color: #fafafa;
+  flex-grow: 1;
+`;
+const InnerMainWrapper = styled.div`
+  margin: 0 auto 30px;
+  padding: 60px 20px 0;
+  width: 100%;
+  max-width: 935px;
+`;
+
+export default () => (
+  <Router>
+    <Wrapper>
+      <GlobalStyle />
+      <Header />
+      <MainWrapper>
+        <InnerMainWrapper>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/about" component={About} />
+            <Route path="/:username" component={Profile} />
+          </Switch>
+        </InnerMainWrapper>
+      </MainWrapper>
+      <Footer />
+    </Wrapper>
+  </Router>
+);
