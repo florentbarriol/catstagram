@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Wrapper = styled.div`
   display: grid;
@@ -36,14 +37,14 @@ const Grid = ({ items }) => (
   <Wrapper>
     {items.map(item => (
       <Item key={item.id}>
-        <ImageItem src={item.image} alt="" />
+        <ImageItem src={item.image} alt={item.description} />
       </Item>
     ))}
   </Wrapper>
 );
 
-Grid.defaultProps = {
-  items: [1, 2, 3, 4, 5]
+Grid.propTypes = {
+  items: PropTypes.array
 };
 
 export default Grid;

@@ -1,49 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/header.component';
-import Grid from './components/grid.component';
+import Grid from '../../components/grid.component';
 import Filter from './components/filter.component';
 
 import { ROOT_API } from '../../constants';
+import { Loading } from '../../components/loading.component';
+import { ErrorBoundary } from '../../components/errorBoundary.component';
+//import { ExceptionExample } from './components/exceptionExample.component';
 
-class Profile extends React.PureComponent {
-  state = {
-    user: {},
-    posts: []
-  };
-  fetchDatas = async () => {
-    const { match } = this.props;
-    const { username } = (match || {}).params;
+const useFetch = username => {
+  const [user, setUser] = useState({});
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-    const user = await fetch(`${ROOT_API}/users?username=${username}`)
+  const fetchDatas = async () => {
+    setLoading(true);
+    const userData = await fetch(`${ROOT_API}/users?username=${username}`)
       .then(response => response.json())
-      .then(data => {
-        const user = data[0];
-        this.setState({ user });
-        return user;
-      });
+      .then(data => data);
 
-    return await fetch(`${ROOT_API}/posts?userId=${user.id}`)
+    const userLocal = userData[0];
+    setUser(userLocal);
+
+    const postsData = await fetch(`${ROOT_API}/posts?userId=${userLocal.id}`)
       .then(response => response.json())
-      .then(data => {
-        this.setState({ posts: data });
-      });
+      .then(data => data);
+
+    setPosts(postsData);
+    setLoading(false);
   };
 
-  componentDidMount() {
-    this.fetchDatas();
-  }
+  useEffect(() => {
+    fetchDatas();
+  }, [username]);
 
-  render() {
-    const { user, posts } = this.state;
+  return {
+    user,
+    posts,
+    loading
+  };
+};
 
-    return (
-      <>
-        <Header user={user} />
-        {<Filter username={user.username} />}
-        <Grid items={posts} />
-      </>
-    );
-  }
-}
+const Profile = ({ match }) => {
+  const { username } = (match || {}).params;
+  const { user, posts, loading } = useFetch(username);
+
+  if (loading) return <Loading />;
+
+  return (
+    <ErrorBoundary>
+      <Header user={user} />
+      <Filter username={user.username} />
+      <Grid items={posts} />
+      {/*<ExceptionExample />*/}
+    </ErrorBoundary>
+  );
+};
 
 export default Profile;
