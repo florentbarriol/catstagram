@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
+import { PropTypes } from 'prop-types';
 
 const Wrapper = styled.div`
   display: grid;
@@ -22,7 +23,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Item = styled.div`
+const LinkItem = styled(NavLink)`
   background-color: #efefef;
 `;
 
@@ -36,9 +37,9 @@ const ImageItem = styled.img`
 const Grid = ({ items }) => (
   <Wrapper>
     {items.map(item => (
-      <Item key={item.id}>
+      <LinkItem key={item.id} to={`${item.link}`}>
         <ImageItem src={item.image} alt={item.description} />
-      </Item>
+      </LinkItem>
     ))}
   </Wrapper>
 );
