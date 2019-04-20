@@ -37,7 +37,7 @@ const ImageItem = styled.img`
 const Grid = ({ items }) => (
   <Wrapper>
     {items.map(item => (
-      <LinkItem key={item.id} to={`${item.link}`}>
+      <LinkItem key={item.id} to={`/p/${item.id}`}>
         <ImageItem src={item.image} alt={item.description} />
       </LinkItem>
     ))}

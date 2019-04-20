@@ -6,8 +6,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './modules/home/home.component';
 import Profile from './modules/profile/profile.component';
 import About from './modules/about/about.component';
+import Preview from './modules/preview/preview.component';
 import { Header, HEADER_HEIGHT } from './components/header.component';
-import { Footer } from './components/footer.component';
 
 const GlobalStyle = createGlobalStyle`
   ${reset};
@@ -67,7 +67,8 @@ export default () => (
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/about" component={About} />
-            <Route path="/:username" component={Profile} />
+            <Route exact path="/:username" component={Profile} />
+            <Route path="/p/:imageId" component={Preview} />
           </Switch>
         </InnerMainWrapper>
       </MainWrapper>
