@@ -18,6 +18,22 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
   }
+  h1, h2, h3 {
+    margin: 1.5em 0;
+  }
+  h1 {
+    font-size: 4rem;
+  }
+  h2 {
+    font-size: 2rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  img {
+    max-width: 100%;
+    height: auto;
+  }
 `;
 
 const Wrapper = styled.div`
@@ -55,7 +71,6 @@ export default () => (
           </Switch>
         </InnerMainWrapper>
       </MainWrapper>
-      <Footer />
     </Wrapper>
   </Router>
 );
