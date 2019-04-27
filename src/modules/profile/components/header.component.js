@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PROFILE_IMG } from '../../../constants';
 
 const Wrapper = styled.header`
   display: flex;
@@ -59,7 +58,9 @@ const BioWrapper = styled.div`
   word-wrap: break-word;
 `;
 
-const Header = ({ user: { username, displayName, bio, avatar } }) => (
+const Header = ({
+  user: { username, displayName, bio, avatar, followers, following, posts }
+}) => (
   <Wrapper>
     <ImgProfileWrapper>
       <ImgProfile src={avatar} alt={displayName} width="150" height="150" />
@@ -68,13 +69,13 @@ const Header = ({ user: { username, displayName, bio, avatar } }) => (
       <Username>{username}</Username>
       <StatsProfile>
         <Stat>
-          <StatNumber>67</StatNumber> posts
+          <StatNumber>{posts.length}</StatNumber> posts
         </Stat>
         <Stat>
-          <StatNumber>67</StatNumber> followers
+          <StatNumber>{followers}</StatNumber> followers
         </Stat>
         <Stat>
-          <StatNumber>67</StatNumber> following
+          <StatNumber>{following}</StatNumber> following
         </Stat>
       </StatsProfile>
       <BioWrapper>

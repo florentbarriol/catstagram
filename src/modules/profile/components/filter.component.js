@@ -31,18 +31,23 @@ const FilterLink = styled(NavLink)`
   }
 `;
 
-const Filter = ({ username = '' }) => (
+const Filter = ({ tab, username = '' }) => (
   <Wrapper>
     <FilterLink to={`/${username}`} exact>
       Posts
     </FilterLink>
-    <FilterLink to={`/${username}/saved`}>Saved</FilterLink>
-    <FilterLink to={`/${username}/tagged`}>Tagged</FilterLink>
+    <FilterLink to={`/${username}/saved`} active={tab === 'saved'}>
+      Saved
+    </FilterLink>
+    <FilterLink to={`/${username}/tagged`} active={tab === 'tagged'}>
+      Tagged
+    </FilterLink>
   </Wrapper>
 );
 
 Filter.propTypes = {
-  username: PropTypes.string
+  username: PropTypes.string,
+  tab: PropTypes.string
 };
 
 export default Filter;
