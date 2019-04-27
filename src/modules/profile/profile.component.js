@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Header from './components/header.component';
 import Grid from '../../components/grid.component';
-import Filter from './components/filter.component';
 
 import { ROOT_API } from '../../constants';
 import { Loading } from '../../components/loading.component';
@@ -28,7 +27,7 @@ const useFetch = username => {
     const userLocal = userData[0];
     setUser(userLocal);
 
-    const postsData = await fetch(`${ROOT_API}/posts?userId=${userLocal.id}`)
+    const postsData = await fetch(`${ROOT_API}/user/${userLocal.id}/posts`)
       .then(response => response.json())
       .then(data => data);
 
